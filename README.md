@@ -1,2 +1,3 @@
-# ordered-dither
-Experiment with different levels of dithering
+# Ordered Dithering
+
+Experiment with different levels of dithering.
