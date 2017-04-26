@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ordered Dithering</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="style.css" />
+		<script src="dither.js"></script>
+	</head>
+
+	<body>
+		<div class="container">
+			<header>
+				<h1>Ordered Dithering</h1>
+				<h2>Experiment with different levels of dithering</h2>
+			</header>
+			
+			<p>Choose an image to upload, select a dithering level, and then hit submit.
+			If the image is large, it may take a few seconds to process the entire image.
+			You can choose between grayscale and color image dithering.
+			Once the image is processed, you can right click the image to "Save as".
+			If you made a mistake, you can reset the form,
+			but you don't have to reset if you just want to change some parameters.
+			I hope you find this tool useful.
+			Ordered dithered images have a special quality that you don't see much nowadays.
+			</p>
+
+			<form id="dither">
+				<h3>Input</h3>
+				<div>
+					<strong>Select image:</strong>
+					<input type="file" accept="image/*" id="uploader" required />
+				</div>
+				<div>
+					<strong>Color depth:</strong>
+					<select id="bitdepth">
+						<option value="gray_1">1-bit monochrome</option>
+						<option value="gray_2">2-bit grayscale</option>
+						<option value="gray_4">4-bit grayscale</option>
+						<option value="rgb_4">4-bit RGB</option>
+						<option value="rgb_6">6-bit RGB</option>
+						<option value="rgb_8">8-bit RGB</option>
+					</select>
+				</div>
+				<div>
+					<input type="submit" />
+					<input type="reset" />
+				</div>
+				
+				<h3>Output</h3>
+				<div>
+					<canvas title="Open image in new tab"></canvas>
+				</div>
+			</form>
+			
+			<footer>
+				<p>Created by Kyle Amoroso in 2015.</p>
+			</footer>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,30 @@
+* {
+	box-sizing: border-box;
+}
+
+html,body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	background: #cccccc url("images/bg.png") fixed;
+}
+
+.container {
+	margin: 0 auto;
+	padding: 1em;
+	max-width: 800px;
+	background: #ffffff;
+	box-shadow: 0 0 1em;
+	font-family: Arial, sans-serif;
+}
+
+canvas {
+	box-shadow: 0 0 5px;
+	background: url("bg-transparent.png");
+	max-width: 100%;
+	cursor: pointer;
+}
