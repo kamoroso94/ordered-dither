@@ -1,159 +1,185 @@
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 html, body {
-	width: 100%;
-	height: 100%;
-	line-height: 150%;
+    width: 100%;
+    height: 100%;
+    line-height: 150%;
 }
 
 body {
-	background: #cccccc url("images/bg.png") fixed;
+    background: #cccccc url("images/bg.png") fixed;
 }
 
 .container {
-	margin: 0 auto;
-	padding: 1em;
-	max-width: 800px;
-	background: #ffffff;
-	box-shadow: 0 0 0 1em rgba(0,0,0,0.5);
-	font-family: Arial, sans-serif;
+    margin: 0 auto;
+    padding: 1em;
+    max-width: 800px;
+    background: #ffffff;
+    box-shadow: 0 0 0 1em rgba(0,0,0,0.5);
+    font-family: Arial, sans-serif;
 }
 
 h1, h2, h3, p {
-	margin: 1em 0;
+    margin: 1em 0;
+}
+
+.button {
+	margin: 0.5em 0;
+	padding: 0.5em;
+	border-radius: 0.5em;
+	border: none;
+	background: rgba(0,0,0,0.4);
+	color: #ffffff;
+	cursor: default;
+	text-decoration: none;
+	cursor: pointer;
+	user-select: none;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+}
+
+.button:hover {
+	background: rgba(0,0,0,0.5);
+}
+
+.button:active {
+	background: rgba(0,0,0,0.4);
+}
+
+label.button + input {
+	display: none;
 }
 
 div, fieldset {
-	margin: 0.25em 0;
+    margin: 0.5em 0;
 }
 
-#output:fullscreen {
-	position: fixed;
-	top: 0;
-	left: 0;
-	margin: 0;
-	width: 100%;
-	height: 100%;
-	background: #000000;
-}
-#output:-webkit-full-screen {
-	position: fixed;
-	top: 0;
-	left: 0;
-	margin: 0;
-	width: 100%;
-	height: 100%;
-	background: #000000;
-}
-#output:-moz-full-screen {
-	position: fixed;
-	top: 0;
-	left: 0;
-	margin: 0;
-	width: 100%;
-	height: 100%;
-	background: #000000;
-}
-#output:-ms-fullscreen {
-	position: fixed;
-	top: 0;
-	left: 0;
-	margin: 0;
-	width: 100%;
-	height: 100%;
-	background: #000000;
-}
-
-canvas {
-	display: block;
-	margin: 0.5em 0;
-	box-shadow: 0 0 0 0.25em rgba(0,0,0,0.5);
-	background: url("images/bg-canvas.png");
-	max-width: 100%;
+#fullscreen > canvas {
 	cursor: pointer;
 }
 
-#output:fullscreen > canvas {
-	position: relative;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: auto;
-	height: auto;
-	max-width: 100%;
-	max-height: 100%;
+#fullscreen:fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000;
 }
-#output:-webkit-full-screen > canvas {
-	position: relative;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: auto;
-	height: auto;
-	max-width: 100%;
-	max-height: 100%;
+#fullscreen:-webkit-full-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000;
 }
-#output:-moz-full-screen > canvas {
-	position: relative;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: auto;
-	height: auto;
-	max-width: 100%;
-	max-height: 100%;
+#fullscreen:-moz-full-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000;
 }
-#output:-ms-fullscreen > canvas {
-	position: relative;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: auto;
-	height: auto;
-	max-width: 100%;
-	max-height: 100%;
+#fullscreen:-ms-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000;
 }
 
-#output:fullscreen > button, #output:fullscreen > h3 {
-	display: none;
+#fullscreen:fullscreen > canvas {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
 }
-#output:-webkit-full-screen > button, #output:-webkit-full-screen > h3 {
-	display: none;
+#fullscreen:-webkit-full-screen > canvas {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
 }
-#output:-moz-full-screen > button, #output:-moz-full-screen > h3 {
-	display: none;
+#fullscreen:-moz-full-screen > canvas {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
 }
-#output:-ms-fullscreen > button, #output:-ms-fullscreen > h3 {
-	display: none;
+#fullscreen:-ms-fullscreen > canvas {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+canvas {
+    display: block;
+	margin: 1em 0.25em;
+    box-shadow: 0 0 0 0.25em rgba(0,0,0,0.4);
+    background: url("images/bg-canvas.png");
+    max-width: 100%;
+}
+
+canvas:hover {
+	box-shadow: 0 0 0 0.25em rgba(0,0,0,0.5);
+}
+
+canvas:active {
+	box-shadow: 0 0 0 0.25em rgba(0,0,0,0.4);
 }
 
 .hidden {
-	display: none;
+    display: none;
 }
 
 #hint {
-	font-style: italic;
-	opacity: 75%;
+    font-style: italic;
+    opacity: 75%;
 }
 
 img.icon {
-	width: auto;
-	height: 1em;
-	vertical-align: middle;
+    width: auto;
+    height: 1em;
+    vertical-align: middle;
 }
 
 figcaption {
-	display: inline;
+    display: inline;
 }
 
 fieldset {
-	border: none;
+    border: none;
 }
 
 footer {
-	margin: 2em 0;
+    margin: 2em 0;
 }

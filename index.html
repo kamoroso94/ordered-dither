@@ -1,93 +1,95 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Ordered Dithering</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <head>
+        <title>Ordered Dithering</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<!-- SEO -->
-		<meta name="application-name" content="Ordered Dithering" />
-		<meta name="author" content="Kyle Amoroso" />
-		<meta name="description" content="Experiment with different levels of dithering." />
-		<meta name="keywords" content="dithering,dither,ordered dither,filter,canvas,html5" />
-		<meta name="version" content="1.0" />
+        <!-- SEO -->
+        <meta name="application-name" content="Ordered Dithering" />
+        <meta name="author" content="Kyle Amoroso" />
+        <meta name="description" content="Experiment with different levels of dithering." />
+        <meta name="keywords" content="dithering,dither,ordered dither,filter,canvas,html5" />
+        <meta name="version" content="1.0" />
 
-		<!-- Favicons -->
-		<link rel="icon" type="image/x-icon" href="favicon.ico" />
-		<link rel="icon" type="image/png" href="icons/favicon-16.png" />
-		<link rel="icon" type="image/png" href="icons/favicon-32.png" />
-		<link rel="icon" type="image/png" href="icons/favicon-64.png" />
-		<link rel="icon" type="image/png" href="icons/favicon-128.png" />
+        <!-- Favicons -->
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="icon" type="image/png" href="icons/favicon-16.png" />
+        <link rel="icon" type="image/png" href="icons/favicon-32.png" />
+        <link rel="icon" type="image/png" href="icons/favicon-64.png" />
+        <link rel="icon" type="image/png" href="icons/favicon-128.png" />
 
-		<!-- Custom -->
-		<link rel="stylesheet" href="style.css" />
-		<script src="main.js"></script>
-	</head>
+        <!-- Custom -->
+        <link rel="stylesheet" href="style.css" />
+        <script src="main.js"></script>
+    </head>
 
-	<body>
-		<div class="container">
-			<header>
-				<h1>Ordered Dithering</h1>
-				<h2>Experiment with different levels of dithering</h2>
-			</header>
+    <body>
+        <div class="container">
+            <header>
+                <h1>Ordered Dithering</h1>
+                <h2>Experiment with different levels of dithering</h2>
+            </header>
 
-			<p>Ordered dithering is, how I see it, the process by which an ordered pattern of colors is applied to an image
-				to create the illusion of a higher color depth when colors are limited.
-				This can often increase the quality of the image if it were otherwise undithered.
-				If you're interested in learning more, I would recommend reading the Wikipedia article on
-				<a href="https://en.wikipedia.org/wiki/Ordered_dithering">ordered dithering</a>.
-			</p><p>To use this tool, just choose an image to upload, select a dithering level, and then hit submit.
-				If the image is large, it may take a few seconds to process the entire image.
-				You can choose between grayscale and color image dithering.
-				Once the image is processed, you can preview it below, or click it to view it in fullscreen.
-				If you want to save it, you can either right-click the image and "Save As" or hit the download button.
-				If you made a mistake, you can reset the form,
-				but you don't have to reset it if you just want to change some parameters.
-			</p><p>I hope you find this tool useful.
-				Ordered dithered images have a special quality, a certain aesthetic,
-				that evokes nostalgia for the Internet of old.
-				Thankfully we now have true 24-bit color, even alpha transparency, but it's nice to appreciate where we've come from.
-			</p>
+            <p>Ordered dithering is, how I see it, the process by which an ordered pattern of colors is applied to an image
+                to create the illusion of a higher color depth when colors are limited.
+                This can often increase the quality of the image if it were otherwise undithered.
+                If you're interested in learning more, I would recommend reading the Wikipedia article on
+                <a href="https://en.wikipedia.org/wiki/Ordered_dithering">ordered dithering</a>.
+            </p><p>To use this tool, just choose an image to upload, select a dithering level, and then hit submit.
+                If the image is large, it may take a few seconds to process the entire image.
+                You can choose between grayscale and color image dithering.
+                Once the image is processed, you can preview it below, or click it to view it in fullscreen.
+                If you want to save it, you can either right-click the image and "Save As" or hit the download button.
+                If you made a mistake, you can reset the form,
+                but you don't have to reset it if you just want to change some parameters.
+            </p><p>I hope you find this tool useful.
+                Ordered dithered images have a special quality, a certain aesthetic,
+                that evokes nostalgia for the Internet of old.
+                Thankfully we now have true 24-bit color, even alpha transparency, but it's nice to appreciate where we've come from.
+            </p>
 
-			<h3>Input</h3>
-			<form id="dither">
-				<div>
-					<strong>Select image:</strong>
-					<input type="file" accept="image/*" id="uploader" required />
-				</div>
-				<div>
-					<strong>Color depth:</strong>
-					<select id="bitdepth">
-						<option value="gray_1">1-bit monochrome</option>
-						<option value="gray_2">2-bit grayscale</option>
-						<option value="gray_4">4-bit grayscale</option>
-						<option value="rgb_4">4-bit RGB</option>
-						<option value="rgb_6">6-bit RGB</option>
-						<option value="rgb_8">8-bit RGB</option>
-					</select>
-				</div>
-				<fieldset id="formButtons">
-					<input type="submit" value="Submit" />
-					<input type="reset" value="Reset" />
-				</fieldset>
-			</form>
+            <h3>Input</h3>
+            <form id="dither">
+                <div>
+                    <strong>Select image:</strong>
+					<label class="button" id="uploadLbl" title="Upload file" for="uploader">Upload</label>
+                    <input type="file" accept="image/*" id="uploader" />
+                </div>
+                <div>
+                    <strong>Color depth:</strong>
+                    <select id="bitdepth">
+                        <option value="gray_1">1-bit monochrome</option>
+                        <option value="gray_2">2-bit grayscale</option>
+                        <option value="gray_4">4-bit grayscale</option>
+                        <option value="rgb_4">4-bit RGB</option>
+                        <option value="rgb_6">6-bit RGB</option>
+                        <option value="rgb_8">8-bit RGB</option>
+                    </select>
+                </div>
+                <fieldset id="formButtons">
+					<label class="button" for="submit">Submit</label>
+                    <input type="submit" id="submit" value="Submit" />
+					<label class="button" for="reset">Reset</label>
+                    <input type="reset" id="reset" value="Reset" />
+                </fieldset>
+            </form>
 
-			<figure id="processing" class="hidden">
-				<img src="images/coin-spin.gif" alt="Dithering..." width="128" height="128" class="icon" />
-				<figcaption>Processing...</figcaption>
-			</figure>
+            <figure id="processing" class="hidden">
+                <img src="images/coin-spin.gif" alt="Please wait" width="128" height="128" class="icon" />
+                <figcaption>Dithering...</figcaption>
+            </figure>
 
-			<p id="hint">Hint: Upload an image and hit submit.</p>
-			<div id="output" class="hidden">
-				<h3>Output</h3>
-				<canvas title="Open preview"></canvas>
-				<button id="downloadBtn">Download</button>
-			</div>
+            <p id="hint">Hint: Upload an image and hit submit.</p>
+            <div id="output" class="hidden">
+                <h3>Output</h3>
+                <div id="fullscreen"><canvas title="Open preview"></canvas></div>
+                <a href="#" download id="download" class="button">Download</a>
+            </div>
 
-			<footer>
-				<p>Created by Kyle Amoroso in 2015.</p>
-			</footer>
-		</div>
-		<a href="#" download id="download" class="hidden"></a>
-	</body>
+            <footer>
+                <p>Created by Kyle Amoroso in 2015.</p>
+            </footer>
+        </div>
+    </body>
 </html>
