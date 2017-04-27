@@ -28,7 +28,7 @@ window.addEventListener("load", function() {
         const reader = new FileReader();
 		const file = uploader.files[0];
 
-		if(file == null) {
+		if(file == null || !(/image\/.+/).test(file.type) && file.type) {
 			return;
 		}
 
