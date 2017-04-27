@@ -60,11 +60,15 @@ window.addEventListener("load", function() {
 
 	uploader.addEventListener("change", function() {
 		const file = uploader.files[0];
+        let name;
+
 		if(file == null) {
-			uploadLbl.textContent = "Upload";
+			name = "Upload";
 		} else {
-			uploadLbl.textContent = file.name || "Uploaded";
+			name = file.name || "Uploaded";
 		}
+
+        uploadLbl.textContent = name.length > 20 ? name.slice(0, 19) + "\u2026" : name;
 	});
 
     canvas.addEventListener("click", function() {

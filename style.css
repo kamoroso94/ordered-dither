@@ -28,13 +28,11 @@ h1, h2, h3, p {
 }
 
 .button {
-	margin: 0.5em 0;
 	padding: 0.5em;
 	border-radius: 0.5em;
 	border: none;
 	background: rgba(0,0,0,0.4);
 	color: #ffffff;
-	cursor: default;
 	text-decoration: none;
 	cursor: pointer;
 	user-select: none;
