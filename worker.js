@@ -1,5 +1,5 @@
-let canvas, ctx;
-const img = new Image();
+"use strict";
+
 const thresholdMaps = [
 	[[ 0,  8,  2, 10],
 	 [12,  4, 14,  6],
@@ -63,67 +63,31 @@ const dithers = {
 	}
 };
 
-// EVENT LISTENERS
-window.addEventListener("load", function() {
-	canvas = document.querySelector("canvas");
-	ctx = canvas.getContext("2d");
-	
-	canvas.addEventListener("click", function() {
-		window.open(this.toDataURL());
-	});
-	
-	img.addEventListener("load", draw);
-	
-	document.getElementById("dither").addEventListener("submit", function(e) {
-		e.preventDefault();
-		const reader = new FileReader();
-		
-		reader.addEventListener("load", function() {
-			if(img.src != this.result) {
-				img.src = this.result;
-			} else {
-				draw();
-			}
-		});
-		
-		reader.readAsDataURL(document.getElementById("uploader").files[0]);
-	});
-	document.getElementById("dither").addEventListener("reset", function() {
-		canvas.width = 300;
-		canvas.height = 150;
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-	});
-});
-
-// FUNCTIONS
-function draw() {
-	canvas.width = img.width;
-	canvas.height = img.height;
-	ctx.drawImage(img, 0, 0);
-	const imageData = ctx.getImageData(0, 0, img.width, img.height);
+addEventListener("message", function(event) {
+    const {imageData, ditherId} = event.data;
 
 	const intensity = (r, g, b) => Math.floor(0.2126 * r + 0.7152 * g + 0.0722 * b);
 	const clamp = (val, min, max) => Math.max(min, Math.min(val, max));
 	const map = (val, min1, max1, min2, max2) => (val - min1) / (max1 - min1) * (max2 - min2) + min2;
-	
+
 	// imageData
 	const width = imageData.width;
 	const height = imageData.height;
 	const pixels = imageData.data;
-	const dither = dithers[document.getElementById("bitdepth").value];
-	
+	const dither = dithers[ditherId];
+
 	// filter
 	for(let i = 0; i < pixels.length; i += 4) {
 		const x = i / 4 % width;
 		const y = Math.floor(i / 4 / width);
-		let colors = pixels.slice(i, i + 3);
-		
+		const colors = pixels.slice(i, i + 3);
+
 		if(dither.isGrayscale) {
 			const gray = intensity(...colors);
-			colors = colors.map(c => gray);
+			colors.fill(gray);
 		}
-		
-		for(var c = 0; c < 3; c++) {
+
+		for(let c = 0; c < 3; c++) {
 			const thresholdMap = thresholdMaps[dither.mapIndex[c]];
 			const mapSide = thresholdMap.length;
 			const mapSize = mapSide * mapSide;
@@ -131,10 +95,10 @@ function draw() {
 			const numColors = dither.colorCount[c];
 			const color = Math.floor(clamp(numColors * colors[c] / 256 + threshold / mapSize - 0.5, 0, numColors - 1));
 			const nearestColor = Math.floor(map(color, 0, numColors - 1, 0, 255));
-			
+
 			pixels[i + c] = nearestColor;
 		}
 	}
-	
-	ctx.putImageData(imageData, 0, 0);
-}
+
+    postMessage(imageData, [imageData.data.buffer]);
+});
