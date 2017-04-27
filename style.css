@@ -166,10 +166,13 @@ canvas:active {
     opacity: 75%;
 }
 
+figure > * {
+	vertical-align: middle;
+}
+
 img.icon {
     width: auto;
     height: 1em;
-    vertical-align: middle;
 }
 
 figcaption {
