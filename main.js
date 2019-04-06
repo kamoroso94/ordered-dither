@@ -4,114 +4,134 @@ let canvas, ctx, form, uploadLbl, uploader, formButtons, statusBox, hint, output
 const ditherWorker = new Worker("worker.js");
 const img = new Image();
 
-const fullscreenElement = ["fullscreenElement", "webkitFullscreenElement", "mozFullScreenElement", "msFullscreenElement"].find(prop => prop in document);
-const exitFullscreen = ["exitFullscreen", "webkitExitFullscreen", "mozCancelFullScreen", "msExitFullscreen"].find(prop => prop in document);
-const requestFullscreen = ["requestFullscreen", "webkitRequestFullscreen", "mozRequestFullScreen", "msRequestFullscreen"].find(prop => prop in Element.prototype);
-const fullscreenerror = ["fullscreenerror", "webkitfullscreenerror", "mozfullscreenerror", "msfullscreenerror"].find(eventName => "on" + eventName in document);
+const fullscreenElement = [
+  "fullscreenElement",
+  "webkitFullscreenElement",
+  "mozFullScreenElement",
+  "msFullscreenElement"
+].find(prop => prop in document);
+const exitFullscreen = [
+  "exitFullscreen",
+  "webkitExitFullscreen",
+  "mozCancelFullScreen",
+  "msExitFullscreen"
+].find(prop => prop in document);
+const requestFullscreen = [
+  "requestFullscreen",
+  "webkitRequestFullscreen",
+  "mozRequestFullScreen",
+  "msRequestFullscreen"
+].find(prop => prop in Element.prototype);
+const fullscreenerror = [
+  "fullscreenerror",
+  "webkitfullscreenerror",
+  "mozfullscreenerror",
+  "msfullscreenerror"
+].find(eventName => "on" + eventName in document);
 
 window.addEventListener("load", function() {
-    canvas = document.querySelector("canvas");
-    ctx = canvas.getContext("2d");
-    form = document.getElementById("dither");
-	uploadLbl = document.getElementById("uploadLbl");
-	uploader = document.getElementById("uploader");
-    formButtons = document.getElementById("formButtons");
-    statusBox = document.getElementById("processing");
-    hint = document.getElementById("hint");
-    output = document.getElementById("output");
-    downloadBtn = document.getElementById("download");
+  canvas = document.querySelector("canvas");
+  ctx = canvas.getContext("2d");
+  form = document.getElementById("dither");
+  uploadLbl = document.getElementById("uploadLbl");
+  uploader = document.getElementById("uploader");
+  formButtons = document.getElementById("formButtons");
+  statusBox = document.getElementById("processing");
+  hint = document.getElementById("hint");
+  output = document.getElementById("output");
+  downloadBtn = document.getElementById("download");
 
-    img.addEventListener("load", draw);
+  img.addEventListener("load", draw);
 
-    form.addEventListener("submit", function(e) {
-        e.preventDefault();
-        const reader = new FileReader();
-		const file = uploader.files[0];
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const reader = new FileReader();
+    const file = uploader.files[0];
 
-		if(file == null || !(/image\/.+/).test(file.type) && file.type) {
-			return;
-		}
+    if(file == null || !(/image\/.+/).test(file.type) && file.type) {
+      return;
+    }
 
-		const name = file.name || "ditheredImage";
-		downloadBtn.download = name.replace(/\.[^.]+$/, "");
+    const name = file.name || "ditheredImage";
+    downloadBtn.download = name.replace(/\.[^.]+$/, "");
 
-        reader.addEventListener("load", function() {
-            if(img.src != this.result) {
-                img.src = this.result;
-            } else {
-                draw();
-            }
-        });
-
-        reader.readAsDataURL(uploader.files[0]);
-
-        // update UI
-        statusBox.classList.remove("hidden");
-        hint.classList.add("hidden");
-        output.classList.add("hidden");
-        formButtons.setAttribute("disabled", true);
+    reader.addEventListener("load", function() {
+      if(img.src != this.result) {
+        img.src = this.result;
+      } else {
+        draw();
+      }
     });
 
-    form.addEventListener("reset", function() {
-        hint.classList.remove("hidden");
-        output.classList.add("hidden");
-		uploadLbl.textContent = "Upload";
-    });
+    reader.readAsDataURL(uploader.files[0]);
 
-	uploader.addEventListener("change", function() {
-		const file = uploader.files[0];
-        let name;
+    // update UI
+    statusBox.classList.remove("hidden");
+    hint.classList.add("hidden");
+    output.classList.add("hidden");
+    formButtons.setAttribute("disabled", true);
+  });
 
-		if(file == null) {
-			name = "Upload";
-		} else {
-			name = file.name || "Uploaded";
-		}
+  form.addEventListener("reset", function() {
+    hint.classList.remove("hidden");
+    output.classList.add("hidden");
+    uploadLbl.textContent = "Upload";
+  });
 
-        uploadLbl.textContent = name.length > 20 ? name.slice(0, 19) + "\u2026" : name;
-	});
+  uploader.addEventListener("change", function() {
+    const file = uploader.files[0];
+    let name;
 
-    canvas.addEventListener("click", function() {
-        if(document[fullscreenElement]) {
-            document[exitFullscreen]();
-            this.setAttribute("title", "Open preview");
-        } else {
-            document.getElementById("fullscreen")[requestFullscreen]();
-            this.setAttribute("title", "Close preview");
-        }
-    });
+    if(file == null) {
+      name = "Upload";
+    } else {
+      name = file.name || "Uploaded";
+    }
 
-    document.addEventListener(fullscreenerror, function() {
-        canvas.setAttribute("title", "Open preview");
-    });
+    uploadLbl.textContent = name.length > 20 ? name.slice(0, 19) + "\u2026" : name;
+  });
 
-    downloadBtn.addEventListener("click", function() {
-        this.href = canvas.toDataURL();
-    });
+  canvas.addEventListener("click", function() {
+    if(document[fullscreenElement]) {
+      document[exitFullscreen]();
+      this.setAttribute("title", "Open preview");
+    } else {
+      document.getElementById("fullscreen")[requestFullscreen]();
+      this.setAttribute("title", "Close preview");
+    }
+  });
 
-    ditherWorker.addEventListener("message", function(event) {
-        const imageData = event.data;
-        drawCanvas(imageData, "putImageData");
+  document.addEventListener(fullscreenerror, function() {
+    canvas.setAttribute("title", "Open preview");
+  });
 
-        // update UI
-        statusBox.classList.add("hidden");
-        output.classList.remove("hidden");
-        formButtons.removeAttribute("disabled");
-    });
+  downloadBtn.addEventListener("click", function() {
+    this.href = canvas.toDataURL();
+  });
+
+  ditherWorker.addEventListener("message", function(event) {
+    const imageData = event.data;
+    drawCanvas(imageData, "putImageData");
+
+    // update UI
+    statusBox.classList.add("hidden");
+    output.classList.remove("hidden");
+    formButtons.removeAttribute("disabled");
+  });
 });
 
 function draw() {
-    drawCanvas(img, "drawImage");
-    const imageData = ctx.getImageData(0, 0, img.width, img.height);
+  drawCanvas(img, "drawImage");
+  const imageData = ctx.getImageData(0, 0, img.width, img.height);
 
-    ditherWorker.postMessage({
-        imageData,
-        ditherId: document.getElementById("bitdepth").value
-    }, [imageData.data.buffer]);
+  ditherWorker.postMessage({
+    imageData,
+    ditherId: document.getElementById("bitdepth").value
+  }, [imageData.data.buffer]);
 }
 
 function drawCanvas(img, methodName) {
-    canvas.width = img.width;
-    canvas.height = img.height;
-    ctx[methodName](img, 0, 0);
+  canvas.width = img.width;
+  canvas.height = img.height;
+  ctx[methodName](img, 0, 0);
 }
