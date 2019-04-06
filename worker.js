@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const thresholdMaps = [
   [[ 0,  8,  2, 10],
@@ -31,39 +31,39 @@ const thresholdMaps = [
    [255, 127, 223,  95, 247, 119, 215,  87, 253, 125, 221,  93, 245, 117, 213,  85]]
 ];
 const dithers = {
-  gray_1: {
-    isGrayscale: true,
-    mapIndex: [2, 2, 2],
-    colorCount: [2, 2, 2]
+  "gray_1": {
+    "isGrayscale": true,
+    "mapIndex": [2, 2, 2],
+    "colorCount": [2, 2, 2]
   },
-  gray_2: {
-    isGrayscale: true,
-    mapIndex: [1, 1, 1],
-    colorCount: [4, 4, 4]
+  "gray_2": {
+    "isGrayscale": true,
+    "mapIndex": [1, 1, 1],
+    "colorCount": [4, 4, 4]
   },
-  gray_4: {
-    isGrayscale: true,
-    mapIndex: [0, 0, 0],
-    colorCount: [16, 16, 16]
+  "gray_4": {
+    "isGrayscale": true,
+    "mapIndex": [0, 0, 0],
+    "colorCount": [16, 16, 16]
   },
-  rgb_4: {
-    isGrayscale: false,
-    mapIndex: [2, 1, 2],
-    colorCount: [2, 4, 2]
+  "rgb_4": {
+    "isGrayscale": false,
+    "mapIndex": [2, 1, 2],
+    "colorCount": [2, 4, 2]
   },
-  rgb_6: {
-    isGrayscale: false,
-    mapIndex: [1, 1, 1],
-    colorCount: [4, 4, 4]
+  "rgb_6": {
+    "isGrayscale": false,
+    "mapIndex": [1, 1, 1],
+    "colorCount": [4, 4, 4]
   },
-  rgb_8: {
-    isGrayscale: false,
-    mapIndex: [1, 1, 1],
-    colorCount: [8, 8, 4]
+  "rgb_8": {
+    "isGrayscale": false,
+    "mapIndex": [1, 1, 1],
+    "colorCount": [8, 8, 4]
   }
 };
 
-addEventListener("message", function(event) {
+addEventListener('message', (event) => {
   const {imageData, ditherId} = event.data;
 
   const intensity = (r, g, b) => Math.floor(0.2126 * r + 0.7152 * g + 0.0722 * b);
