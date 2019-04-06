@@ -33,6 +33,7 @@ h1, h2, h3, p {
   border: none;
   background: rgba(0,0,0,0.4);
   color: #ffffff;
+  font-size: 1rem;
   text-decoration: none;
   cursor: pointer;
   user-select: none;
